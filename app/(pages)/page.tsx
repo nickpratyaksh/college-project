@@ -4,56 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
-import axios from "axios";
+import useChatStore from "@/lib/useChatState";
 import { useState } from "react";
 
 export default function ChatPage() {
+  const { messages, loading, chatCompletion } = useChatStore();
   const [inputValue, setInputValue] = useState("");
-  const [loading, setLoading] = useState(false);
   const [useMemory, setUseMemory] = useState(true);
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>(
-    [
-      {
-        role: "system",
-        content: "You are an AI assistant",
-      },
-    ]
-  );
 
   async function onSubmit() {
     if (!inputValue.trim()) return;
-    setLoading(true);
-
-    const newMessages = useMemory
-      ? [...messages, { role: "user", content: inputValue }]
-      : [{ role: "user", content: inputValue }];
-
-    setMessages(newMessages);
-
+    chatCompletion(inputValue);
     setInputValue("");
-
-    try {
-      const res = await axios.post("/api/chat", {
-        model: "deepseek-r1",
-        messages: newMessages,
-        stream: false,
-      });
-
-      const fullResponse = res.data.message.content;
-      const thinkMatch = fullResponse.match(/<think>([\s\S]*?)<\/think>/);
-      const thinkPart = thinkMatch ? thinkMatch[1].trim() : "";
-      const answerPart = fullResponse
-        .replace(/<think>[\s\S]*?<\/think>/, "")
-        .trim();
-
-      console.log("Thinking:", thinkPart);
-
-      setMessages([...newMessages, { role: "assistant", content: answerPart }]);
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
-    }
-
-    setLoading(false);
   }
 
   return (
