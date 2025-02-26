@@ -8,7 +8,7 @@ import useChatStore from "@/lib/useChatState";
 import { useState } from "react";
 
 export default function ChatPage() {
-  const { messages, loading, chatCompletion } = useChatStore();
+  const { messages, loading, chatCompletion, generateSummary } = useChatStore();
   const [inputValue, setInputValue] = useState("");
 
   async function onSubmit() {
@@ -58,6 +58,9 @@ export default function ChatPage() {
           />
           <Button onClick={onSubmit} disabled={loading}>
             Send
+          </Button>
+          <Button onClick={generateSummary} disabled={loading}>
+            Summary
           </Button>
         </div>
       </div>
