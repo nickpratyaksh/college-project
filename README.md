@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Dev notes -
 
-## Getting Started
+- Prompt for chatbot - "You are a helpful assistant that answers questions based on the context provided. You use previous history messages, reference them to answer the questions"
 
-First, run the development server:
+- Prompt for extracting user details = "Extract key details about the user from the following conversation. Focus only on information that might be relevant for future interactions, such as user preferences, opinions, recurring topics, important context, and any explicitly stated facts about the user. Do not summarize the conversation—only list extracted details concisely."
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## For college -
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Synopsis of LLM usage with prompt engineering
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Introduction
+   The project aims to make LLM usage easier for users by abstracting complex workings of the system, while giving more features like memory retention.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Objectives
 
-## Learn More
+3. Scope
 
-To learn more about Next.js, take a look at the following resources:
+4. Modules of the system
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Technologies used
+   Operating System - Arch Linux
+   Display Server - Xorg
+   Window Manager - BSPWM
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+6. Expected Outcomes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+7. Conclusion
