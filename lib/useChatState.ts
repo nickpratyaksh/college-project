@@ -8,7 +8,7 @@ type ChatStore = {
   loading: boolean;
   summary: string;
   chatCompletion: (prompt: string) => Promise<void>;
-  generateSummary: () => Promise<void>;
+  generateSummary: () => Promise<string | undefined>;
 };
 
 const useChatStore = create<ChatStore>((set, get) => ({
@@ -17,9 +17,17 @@ const useChatStore = create<ChatStore>((set, get) => ({
   summary: "",
 
   chatCompletion: async (prompt) => {
-    const { messages } = get();
+    const { messages, generateSummary } = get();
     set({ loading: true });
-    messages.push({ role: "user", content: prompt });
+    if (messages.length > 10) {
+      const summary = await generateSummary();
+      messages.splice(
+        0,
+        messages.length - 1,
+        { role: "assistant", content: summary! },
+        { role: "user", content: prompt }
+      );
+    } else messages.push({ role: "user", content: prompt });
     set({ messages });
 
     try {
@@ -48,13 +56,14 @@ const useChatStore = create<ChatStore>((set, get) => ({
       const res = await axios.post("/api/generate", {
         model: "deepseek-r1",
         prompt:
-          "Extract key details about the user from the following conversation. Focus only on information that might be relevant for future interactions, such as user preferences, opinions, recurring topics, important context, and any explicitly stated facts about the user. Do not summarize the conversation—only list extracted details concisely." +
+          "Summarize the following conversation. Only mention the main topic the user talked about. Do not mention anything from the assistant's answers" +
           JSON.stringify(messages),
         stream: false,
       });
 
       const processedResponse = processResponse(res.data.response);
       console.log("Generated Summary:", processedResponse.answerPart);
+      return processedResponse.answerPart;
     } catch (error) {
       console.error("Error generating summary:", error);
     }
