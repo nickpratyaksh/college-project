@@ -23,8 +23,8 @@ const useChatStore = create<ChatStore>((set, get) => ({
       const summary = await generateSummary();
       messages.splice(
         0,
-        messages.length - 1,
-        { role: "assistant", content: summary! },
+        messages.length,
+        { role: "system", content: summary! },
         { role: "user", content: prompt }
       );
     } else messages.push({ role: "user", content: prompt });

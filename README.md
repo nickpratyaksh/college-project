@@ -17,10 +17,7 @@ Synopsis of LLM usage with prompt engineering
 
 4. Modules of the system
 
-5. Technologies used
-   Operating System - Arch Linux
-   Display Server - Xorg
-   Window Manager - BSPWM
+5. Technologies used - Arch Linux, Xorg, BSPWM, Ollama, Deepseek R1, NextJS
 
 6. Expected Outcomes
 
