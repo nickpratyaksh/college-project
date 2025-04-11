@@ -21,7 +21,7 @@ export default function GeneratePage() {
       setLoading(true);
       setMessage(inputValue);
       const res = await axios.post("/api/generate", {
-        model: "deepseek-r1",
+        model: "deepseek-r1:1.5b",
         prompt: inputValue,
         stream: false,
       });

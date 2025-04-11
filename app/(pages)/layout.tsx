@@ -1,19 +1,14 @@
 "use client";
 
+import { firebaseConfig } from "@/firebase/firebaseConfig";
 import axios from "axios";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import { initializeApp } from "firebase/app";
 
 export default function layout({ children }: { children: React.ReactNode }) {
   axios.defaults.baseURL = "http://localhost:11434";
   axios.defaults.headers["Content-Type"] = "application/json";
 
-  return (
-    <SidebarProvider>
-      <AppSidebar />
-      <div className="w-full flex flex-col">
-        <div className="flex-1">{children}</div>
-      </div>
-    </SidebarProvider>
-  );
+  initializeApp(firebaseConfig);
+
+  return <>{children}</>;
 }

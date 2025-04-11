@@ -21,11 +21,6 @@ export function AppSidebar() {
       icon: Home,
     },
     {
-      title: "Chat",
-      url: "/chat",
-      icon: MessageCircle,
-    },
-    {
       title: "Generate",
       url: "/generate",
       icon: Plus,

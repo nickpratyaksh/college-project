@@ -32,7 +32,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
 
     try {
       const res = await axios.post("/api/chat", {
-        model: "deepseek-r1",
+        model: "deepseek-r1:1.5b",
         messages: messages,
         stream: false,
       });
