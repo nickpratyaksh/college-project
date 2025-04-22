@@ -1,5 +1,6 @@
 "use client";
 
+import { ChatBubble } from "@/components/chatBubble";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -51,11 +52,7 @@ export default function GeneratePage() {
         {/* Messages */}
         <ScrollArea className="h-full rounded-lg">
           <div className="flex flex-col gap-2">
-            {response && (
-              <div className="px-3 py-2 rounded-md w-fit max-w-xl bg-gray-200 text-black">
-                {response}
-              </div>
-            )}
+            {response && <ChatBubble message={response} />}
             {loading && <div className="text-gray-500">Thinking...</div>}
             {message && (
               <div className="px-3 py-2 rounded-md w-fit max-w-xl bg-blue-500 text-white self-end">

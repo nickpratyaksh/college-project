@@ -1,5 +1,6 @@
 "use client";
 
+import { ChatBubble } from "@/components/chatBubble";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -40,7 +41,11 @@ export default function ChatPage() {
                     : "hidden"
                 }`}
               >
-                {message.content}
+                {message.role === "assistant" ? (
+                  <ChatBubble message={message.content} />
+                ) : (
+                  message.content
+                )}
               </div>
             ))}
           </div>

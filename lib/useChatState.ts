@@ -19,7 +19,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
   chatCompletion: async (prompt) => {
     const { messages, generateSummary } = get();
     set({ loading: true });
-    if (messages.length > 10) {
+    if (messages.length > 5) {
       const summary = await generateSummary();
       messages.splice(
         0,
@@ -32,7 +32,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
 
     try {
       const res = await axios.post("/api/chat", {
-        model: "deepseek-r1:1.5b",
+        model: "deepseek-r1",
         messages: messages,
         stream: false,
       });
@@ -63,6 +63,7 @@ const useChatStore = create<ChatStore>((set, get) => ({
 
       const processedResponse = processResponse(res.data.response);
       console.log("Generated Summary:", processedResponse.answerPart);
+      localStorage.setItem("summary", processedResponse.answerPart);
       return processedResponse.answerPart;
     } catch (error) {
       console.error("Error generating summary:", error);

@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ export default function LoginPage() {
           // Signed up
           const user = userCredential.user;
           console.log(user);
+          toast("Signed up successfully");
           router.push("/");
           // ...
         })
@@ -33,6 +35,15 @@ export default function LoginPage() {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
+          if (errorCode === "auth/email-already-in-use") {
+            toast.error("Email already in use");
+          } else if (errorCode === "auth/invalid-email") {
+            toast.error("Invalid email");
+          } else if (errorCode === "auth/operation-not-allowed") {
+            toast.error("Operation not allowed");
+          } else if (errorCode === "auth/weak-password") {
+            toast.error("Weak password");
+          }
           // ..
         });
     } else {
@@ -41,6 +52,7 @@ export default function LoginPage() {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          toast("Signed in successfully");
           router.push("/");
           // ...
         })
@@ -48,6 +60,11 @@ export default function LoginPage() {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
+          if (errorCode === "auth/user-not-found") {
+            toast.error("User not found");
+          } else if (errorCode === "auth/invalid-credential") {
+            toast.error("Invalid credential");
+          }
         });
     }
   };

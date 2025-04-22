@@ -1,19 +1,36 @@
-import { Home, MessageCircle, Plus } from "lucide-react";
+import { Home, Plus } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { Button } from "./ui/button";
+import { getAuth, signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function AppSidebar() {
+  const auth = getAuth();
+  const router = useRouter();
+  function onSignOut() {
+    signOut(auth)
+      .then(() => {
+        console.log("Signed out");
+        toast("Signed out successfully");
+        router.push("/login");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   const items = [
     {
       title: "Home",
@@ -32,7 +49,6 @@ export function AppSidebar() {
       <SidebarHeader />
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -49,6 +65,11 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <Button variant={"destructive"} onClick={onSignOut}>
+          Logout
+        </Button>
+      </SidebarFooter>
       <SidebarFooter />
     </Sidebar>
   );
